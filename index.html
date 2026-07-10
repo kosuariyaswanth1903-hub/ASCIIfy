@@ -70,7 +70,7 @@ const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
 const output=document.getElementById("ascii");
 
-const chars="@%#*+=-:. ";
+const chars="$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
 
 upload.addEventListener("change",e=>{
 
@@ -103,7 +103,12 @@ const r=pixels[index];
 const g=pixels[index+1];
 const b=pixels[index+2];
 
-const brightness=(r+g+b)/3;
+let brightness=0.299*r+0.587*g+0.114*b;
+
+// contrast boost around midpoint
+const contrast=1.2;
+brightness=(brightness-128)*contrast+128;
+brightness=Math.max(0,Math.min(255,brightness));
 
 const charIndex=Math.floor((brightness/255)*(chars.length-1));
 
